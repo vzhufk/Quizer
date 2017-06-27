@@ -24,7 +24,7 @@ SECRET_KEY = 'e%oxq^6@w9))+)bg&8ul6shz+=px2-t5m6m*#+1%5^sh5jp2_o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bizquizer.herokuapp.com']
 
 # Application definition
 

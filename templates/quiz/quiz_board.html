@@ -1,0 +1,28 @@
+{% extends 'quiz/base.html' %}
+{% block title %}
+    <title>Quiz Board</title>
+{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Points</th>
+            <th>Author</th>
+            <th>&nbsp;</th>
+        </tr>
+        {% for i in quizes %}
+            <tr>
+                <td>{{ i.name }}</td>
+                <td>{{ i.description }}</td>
+                <td>{{ i.date }}</td>
+                <td>{{ i.points }}</td>
+                <td><a href="profile/{{ i.author.id }}">{{ i.author.username }}</a></td>
+                <td><button class="button" onclick="location.href='/quiz/{{ i.id }}'"><span class="glyphicon glyphicon-play"></span> Play</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+{% endblock %}

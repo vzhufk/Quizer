@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% block head %}
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>Base</title>
+    {% endblock %}
+    {% include 'quiz/bootstrap.html' %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
+{% endblock %}
+</head>
+<body>
+{% block body %}
+    {% block navigation %}
+       <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-question-sign"></span> Quizer</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+              {% if request.session.logged is None %}
+                    <li><a href="/about">About</a></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/signup"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              {% else %}
+                    <li><a href="/quizes">Quizes</a></li>
+                    <li><a href="/about">About</a></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/profile"><span class="glyphicon glyphicon-user"></span>{{ reqest.session.user.username }}</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                {% endif %}
+            </ul>
+          </div>
+        </nav>
+    {% endblock %}
+    {% block content %}
+        <h1>Body</h1>
+    {% endblock %}
+    {% block footer %}
+
+    {% endblock %}
+{% endblock %}
+</body>
+</html>

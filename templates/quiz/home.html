@@ -1,0 +1,16 @@
+{% extends 'quiz/base.html' %}
+{% block title %}
+    <title>Welcome</title>
+{%  endblock %}
+{% block content %}
+    <div class="jumbotron">
+    {% if message is not None %}
+        <h1>{{ message }}</h1>
+    {% else %}
+        <h1>Hello, friend!</h1>
+        <p>Welcome to quizer. </p>
+        <p>If you are new here, you can register by clicking below. Good luck :)</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    {% endif %}
+    </div>
+{% endblock %}

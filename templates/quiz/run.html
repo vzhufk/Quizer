@@ -1,0 +1,27 @@
+{% extends 'quiz/base.html' %}
+{% block title %}
+    <title>{{ quiz.name }}</title>
+{%  endblock %}
+{% block content %}
+    <h2>{{ quiz.name }}</h2>
+    <hr>
+    <form method="post">
+    {% csrf_token %}
+        {% for i in tasks %}
+            <div class="form-group">
+            <details open>
+                <summary><label><h4>{{ i.question.value }}</h4></label></summary>
+                {% if i.question.image %}
+                    <img src="{{ i.question.image.url }}">
+                {% endif %}
+                {% for j in i.answers %}
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="{{ j.id }}">{{ j.value }}</label>
+                    </div>
+                {% endfor %}
+            </details>
+            </div>
+        {% endfor %}
+            <button type="submit" class="btn btn-default">Check me out</button>
+    </form>
+{% endblock %}

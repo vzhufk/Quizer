@@ -1,0 +1,34 @@
+.jumbotron{
+    margin: 15px;
+}
+.jumbotron *{
+    text-indent: 20px;
+}
+
+.jumbotron a{
+    margin-left: 20px;
+}
+
+.jumbotron table{
+    width: 100%;
+
+}
+.jumbotron button{
+    text-indent: 0;
+}
+
+.jumbotron img{
+    width: 250px;
+    height: 250px;
+}
+
+body{
+    padding: 25px;
+}
+form table{
+    margin-left: auto;
+    margin-right: auto;
+}
+form table td{
+    text-align: center;
+}

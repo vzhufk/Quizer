@@ -1,0 +1,75 @@
+{% extends 'quiz/base.html' %}
+{% block title %}
+    <title>{{ request.session.username }} profile</title>
+{% endblock %}
+{% block content %}
+    {%  if not info_form and not password_form %}
+        <div class="jumbotron">
+            <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            <img src="/media/{{ user.image }}">
+            <h4>{{ user.username }}</h4>
+            <h4>{{ user.email }}</h4>
+        </div>
+        <div class="jumbotron">
+            <table class="table table-striped">
+                <tr>
+                    <th>Quiz</th>
+                    <th>Date</th>
+                    <th>Points</th>
+                </tr>
+                {% for i in records %}
+                    <tr>
+                        <td><a href="/quiz/{{ i.to.id }}">{{ i.to.name }}</a></td>
+                        <td>{{ i.date }}</td>
+                        <td>{{ i.points }}/{{ i.to.points }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {%  else %}
+        <div class="form-group">
+            <button class="button" onclick="location.href = '/profile/{{ request.session.id }}'">View my profile</button>
+            <form method="post" enctype="multipart/form-data" action="/info_change">
+            {% csrf_token %}
+                <table>
+                    {% for i in info_form %}
+                        <tr>
+                            <td>{{ i.label }}</td>
+                            <td>{{ i }}</td>
+                        </tr>
+                    {% endfor %}
+                        <tr>
+                            <td colspan="2">
+                                <img src="media/{{ info_form.image.value }}" width="250" height="250">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="submit" class="button ui-button-text">Save</button>
+                            </td>
+                        </tr>
+                </table>
+
+            </form>
+        </div>
+        <hr>
+        <div class="form-group">
+            <form method="post" action="/password_change">
+            {% csrf_token %}
+                <table>
+                    {% for i in password_form %}
+                        <tr>
+                            <td>{{ i.label }}</td>
+                            <td>{{ i }}</td>
+                        </tr>
+                    {% endfor %}
+                        <tr>
+                            <td colspan="2">
+                                <button type="submit" class="button ui-button-text">Change</button>
+                            </td>
+                        </tr>
+                </table>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

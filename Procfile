@@ -1,0 +1,1 @@
+web: gunicorn bizicoTest.wsgi --log-file -

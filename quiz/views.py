@@ -140,7 +140,8 @@ def login(request):
                 error = "Wrong password."
         except ObjectDoesNotExist:
             error = "No such user."
-
+        except KeyError:
+            error = "Nice try. Input valid data plz."
         if error is not None:
             return render(request, 'quiz/login.html', {'error': error, 'form': login_form})
         else:

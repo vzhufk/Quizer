@@ -43,6 +43,10 @@ def check_user_session(request):
     :param request: HTTP request
     :return:
     """
+    try:
+        request.session['logged']
+    except KeyError:
+        end_user_session(request)
     return request.session['logged'] is not None
 
 
@@ -53,10 +57,6 @@ def home(request, message=None):
     :param message: Optional message, if you want ot redirect client with some message
     :return:
     """
-    try:
-        request.session['logged']
-    except KeyError:
-        request = end_user_session(request)
     return render(request, 'quiz/home.html', {'message': message})
 
 
@@ -104,27 +104,29 @@ def check_user_quiz(answers, quiz_id):
     :param quiz_id: id of Quiz
     :return: Amount of points
     """
-    quiz_max_amount_of_points = models.Quiz.objects.get(id=quiz_id).points
-    max_amount_of_points = result = 0
+    result = models.Quiz.objects.get(id=quiz_id).points
+    max_amount_of_points = 0
     for i in models.Question.objects.filter(to=quiz_id):
         max_amount_of_points += i.points
-        user_correct = user_sum = q_correct = 0
+        user_correct = user_answers = question_correct = 0
         for j in models.Answer.objects.filter(to=i.id):
+            # User answers
             if int(j.id) in answers:
                 if j.correct:
                     user_correct += 1
-                user_sum += 1
+                user_answers += 1
+            # Right answers
             if j.correct:
-                q_correct += 1
+                question_correct += 1
 
         # ZERO DIVISION FIX
-        if user_sum == 0:
+        if user_answers == 0:
             result += 0
-        elif q_correct == 0:
+        elif question_correct == 0:
             result += i.points
         else:
-            result += float((1.0*i.points*user_correct) / (q_correct*user_sum))
-    result += (quiz_max_amount_of_points - max_amount_of_points)
+            result += float(i.points * user_correct) / (question_correct * user_answers)
+    result -= max_amount_of_points
     return result
 
 

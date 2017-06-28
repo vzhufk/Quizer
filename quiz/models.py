@@ -78,4 +78,4 @@ class Record(models.Model):
     points = models.IntegerField(blank=True)
 
     def __str__(self):
-        return self.by.username + "->" + self.to.name + " = " + self.points
+        return self.by.username + "->" + self.to.name + " = " + str(self.points)

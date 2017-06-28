@@ -5,7 +5,6 @@ from django.http import Http404
 from django.shortcuts import render
 
 # Create your views here.
-from bizicoTest.settings import SESSION_EXPIRE
 from quiz import models, forms
 from quiz.forms import ProfileEditForm, ProfilePasswordEditForm
 from quiz.models import User, Quiz, Record
@@ -171,12 +170,14 @@ def signup(request):
     if request.method == "POST":
         sign_up_form = forms.SignUpForm(request.POST)
         sign_up_form.is_valid()
+        try:
+            u = User(email=sign_up_form.cleaned_data['email'], username=sign_up_form.cleaned_data['username'])
+            error = u.check_existence()
 
-        u = User(email=sign_up_form.cleaned_data['email'], username=sign_up_form.cleaned_data['username'])
-        error = u.check_existence()
-
-        if sign_up_form.cleaned_data['password'] != sign_up_form.cleaned_data['password_repeat']:
-            error = "Passwords didn't match."
+            if sign_up_form.cleaned_data['password'] != sign_up_form.cleaned_data['password_repeat']:
+                error = "Passwords didn't match."
+        except KeyError:
+            error = "Mistakes!"
         if error is None:
             u.set_password(sign_up_form.cleaned_data['password'])
             u.save()
@@ -214,13 +215,16 @@ def password_change(request):
     if request.method == 'POST' and check_user_session(request):
         form = ProfilePasswordEditForm(request.POST)
         form.is_valid()
-        user = User.objects.get(id=request.session.id)
+        user = User.objects.get(id=request.session['id'])
         if user.check_password(form.cleaned_data['old_password']) and form.cleaned_data['password_repeat'] == \
                 form.cleaned_data['password']:
             user.set_password(form.cleaned_data['password'])
             user.save()
-            end_user_session()
+            end_user_session(request)
             return home(request, "Success! You changed password! Try to use it.")
+        else:
+            return home(request, "You messed up something.")
+
     else:
         return home(request, "Ops! Something went wrong. :(")
 

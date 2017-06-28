@@ -120,7 +120,7 @@ def check_user_quiz(answers, quiz_id):
         # ZERO DIVISION FIX
         if user_sum == 0:
             result += 0
-        elif q_correct:
+        elif q_correct == 0:
             result += i.points
         else:
             result += float((1.0*i.points) / q_correct) * float((1.0*user_correct) / user_sum)

@@ -125,7 +125,7 @@ def check_user_quiz(answers, quiz_id):
         elif question_correct == 0:
             result += i.points
         else:
-            result += float(i.points * user_correct) / (question_correct * user_answers)
+            result += float(i.points * user_correct * user_correct) / (question_correct * user_answers)
     result -= max_amount_of_points
     return result
 

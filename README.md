@@ -19,6 +19,8 @@ All tests, questions and answers must be managed from Django Admin
  
 Recommended timeframe to implement this task is 1 week
 
+### [Deployed app](https://bizquizer.herokuapp.com)
+
 ### Local admin was:
 > username: root    
 > password: toocomon

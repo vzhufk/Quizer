@@ -1,4 +1,5 @@
-Technical Requirements: 
+TASK
+Technical Requirements:
  
 1. Python 3.5
 2. Django 1.11

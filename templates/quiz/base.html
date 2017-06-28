@@ -9,9 +9,9 @@
             Base
         {% endblock %}
     </title>
-
-    {% include 'quiz/bootstrap.html' %}
     {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'quiz/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'quiz/css/bootstrap-theme.css' %}">
     <link rel="stylesheet" href="{% static 'quiz/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'quiz/css/social/social.css' %}">
 {% endblock %}
@@ -32,6 +32,11 @@
                       Home
                   </a>
               </li>
+                <li>
+                  <a href="/records">
+                      Records
+                  </a>
+                </li>
               {% if not request.session.logged %}
                     <li><a href="/admin">Admin</a></li>
                   </ul>

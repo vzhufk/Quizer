@@ -13,9 +13,10 @@ urlpatterns = [
     url(r'login', views.login),
     url(r'logout', views.logout),
     url(r'signup', views.signup),
-    url(r'profile/(?P<id>[0-9])', views.profile),
+    url(r'profile/(?P<user_id>[0-9])', views.profile),
     url(r'profile', views.profile),
     url(r'info_change', views.info_change),
     url(r'password_change', views.password_change),
     url(r'quiz', views.quiz_board),
+    url(r'records', views.records)
 ]

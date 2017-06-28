@@ -14,16 +14,15 @@ def get_image_path(instance, filename):
 
 
 class User(AbstractUser):
-    rate = models.FloatField(default=0.0, blank=True)
     image = models.ImageField(upload_to=get_image_path, blank=True, null=True)
 
     def __str__(self):
         return self.username
 
-    """
-    Checks if user is already in database
-    """
     def check_existence(self):
+        """
+        Checks if user is already in database
+        """
         error = None
         try:
             User.objects.get(email=self.email)

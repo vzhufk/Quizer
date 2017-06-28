@@ -1,10 +1,11 @@
 import datetime
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from django.shortcuts import render
 
 # Create your views here.
+from bizicoTest.settings import SESSION_EXPIRE
 from quiz import models, forms
 from quiz.forms import ProfileEditForm, ProfilePasswordEditForm
 from quiz.models import User, Quiz, Record
@@ -88,13 +89,18 @@ def run(request, current_id):
                             points=check_user_quiz(answers, current_id),
                             date=datetime.datetime.now())
             record.save()
-            return home(request, "You scored "+str(record.points)+" in "+str(quiz.name)+" quiz!")
+            return home(request, "You scored " + str(record.points) + " in " + str(quiz.name) + " quiz!")
         else:
             return render(request, 'quiz/run.html', {'quiz': quiz, 'tasks': tasks})
 
 
-# TODO Refactor dis
 def check_user_quiz(answers, quiz_id):
+    """
+    Calculation of user quiz result
+    :param answers: list of checked Answers
+    :param quiz_id: id of Quiz
+    :return: Amount of points
+    """
     quiz_max_amount_of_points = models.Quiz.objects.get(id=quiz_id).points
     max_amount_of_points = result = 0
     for i in models.Question.objects.filter(to=quiz_id):
@@ -182,8 +188,8 @@ def signup(request):
         return render(request, 'quiz/signup.html', {'form': sign_up_form})
 
 
-def profile(request, id=None):
-    if id is None:
+def profile(request, user_id=None):
+    if user_id is None:
         user = models.User.objects.get(id=request.session['id'])
         info_form = ProfileEditForm(initial={'email': user.email,
                                              'username': user.username,
@@ -194,11 +200,17 @@ def profile(request, id=None):
         return render(request, 'quiz/profile.html', {'info_form': info_form,
                                                      'password_form': password_form})
     else:
-        return render(request, 'quiz/profile.html', {'user': models.User.objects.get(id=id),
-                                                     'records': models.Record.objects.filter(by=id)})
+        records = models.Record.objects.filter(by=user_id).order_by('-date')
+        return render(request, 'quiz/profile.html', {'user': models.User.objects.get(id=user_id),
+                                                     'records': records})
 
 
 def password_change(request):
+    """
+    Changing personal info of current user
+    :param request: HTTP POST request
+    :return:
+    """
     if request.method == 'POST' and check_user_session(request):
         form = ProfilePasswordEditForm(request.POST)
         form.is_valid()
@@ -214,6 +226,11 @@ def password_change(request):
 
 
 def info_change(request):
+    """
+    Changing info from form
+    :param request: HTTP request POST
+    :return:
+    """
     if request.method == 'POST' and check_user_session(request):
         form = ProfileEditForm(request.POST, request.FILES)
         form.is_valid()
@@ -242,3 +259,13 @@ def quiz_board(request):
     else:
         return home(request, "You first step is registration friend ;)")
         # TODO Refactor
+
+
+def records(request):
+    """
+    Table of records
+    :param request:
+    :return:
+    """
+    all_records = models.Record.objects.all().order_by('-date')
+    return render(request, 'quiz/records.html', {'records': all_records})

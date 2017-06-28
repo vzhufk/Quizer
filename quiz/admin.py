@@ -29,7 +29,10 @@ class QuizAdmin(admin.ModelAdmin):
     model = quiz.Quiz
 
 # TODO Place here QuestionAdmin ;)
+# TODO Sorry :C
+# TODO I wanted to add question creation on quiz form, but i couldn't find a way.
 
 admin.site.register(quiz.Question, QuestionAdmin)
 admin.site.register(quiz.Quiz, QuizAdmin)
 admin.site.register(quiz.Record)
+admin.site.register(quiz.User)

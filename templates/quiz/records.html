@@ -1,0 +1,24 @@
+{% extends 'quiz/base.html' %}
+{% block title %}
+    Latest Records
+{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+    <table class="table table-striped">
+        <tr>
+            <th>Quiz name</th>
+            <th>Date</th>
+            <th>User name</th>
+            <th>Points</th>
+        </tr>
+        {% for i in records %}
+            <tr>
+                <td><a href="quiz/{{ i.to.id }}">{{ i.to.name }}</a></td>
+                <td>{{ i.date }}</td>
+                <td><a href="profile/{{ i.by.id }}">{{ i.by.username }}</a></td>
+                <td>{{ i.points }}/{{ i.to.points }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+{% endblock %}

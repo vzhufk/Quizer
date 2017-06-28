@@ -1,5 +1,5 @@
-TASK
-Technical Requirements:
+## Task:   
+### Technical Requirements:   
  
 1. Python 3.5
 2. Django 1.11
@@ -7,8 +7,7 @@ Technical Requirements:
 4. Any Javascript library or Framework
 5. Hosted on Bitbucket
 
- 
-Functional requirements: 
+### Functional requirements: 
  
 Implement a simple website where user can see a list of tests. 
 User can select a specific test and see a page with the list of questions and pass an answer to it. 
@@ -20,8 +19,8 @@ All tests, questions and answers must be managed from Django Admin
  
 Recommended timeframe to implement this task is 1 week
 
-#################
-Local admin was:
-username: root
-password: toocomon
-#################
+### Local admin was:
+> username: root    
+> password: toocomon
+
+*P.S.: Heroku deployed application stores images not too long i case is's free. Local version works fine. :C* 

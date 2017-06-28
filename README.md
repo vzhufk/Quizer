@@ -23,5 +23,5 @@ Recommended timeframe to implement this task is 1 week
 #################
 Local admin was:
 username: root
-password: tocomon
+password: toocomon
 #################

@@ -53,6 +53,10 @@ def home(request, message=None):
     :param message: Optional message, if you want ot redirect client with some message
     :return:
     """
+    try:
+        request.session['logged']
+    except KeyError:
+        request = end_user_session(request)
     return render(request, 'quiz/home.html', {'message': message})
 
 

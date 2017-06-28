@@ -1,6 +1,6 @@
 {% extends 'quiz/base.html' %}
 {% block title %}
-    <title>{{ request.session.username }} profile</title>
+    {{ request.session.username }} Profile
 {% endblock %}
 {% block content %}
     {%  if not info_form and not password_form %}

@@ -18,3 +18,9 @@ Only authenticated users can access the list of tests and pass the test
 All tests, questions and answers must be managed from Django Admin
  
 Recommended timeframe to implement this task is 1 week
+
+#################
+Local admin was:
+username: root
+password: tocomon
+#################

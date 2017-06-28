@@ -5,12 +5,21 @@
 {% block content %}
     {%  if not info_form and not password_form %}
         <div class="jumbotron">
-            <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-            <img src="/media/{{ user.image }}">
-            <h4>{{ user.username }}</h4>
-            <h4>{{ user.email }}</h4>
+            <div class="list-group">
+                <a class="list-group-item"><img src="/media/{{ user.image }}"></a>
+                <a class="list-group-item disabled">Full Name</a>
+                <a class="list-group-item">{{ user.first_name }} {{ user.last_name }}</a>
+                <a class="list-group-item disabled">Username</a>
+                <a class="list-group-item">{{ user.username }}</a>
+                <a class="list-group-item disabled">Email</a>
+                <a class="list-group-item">{{ user.email }}</a>
+            </div>
+        </div
         </div>
         <div class="jumbotron">
+            <div class="panel panel-default">
+                <div class="panel-body">Records</div>
+            </div>
             <table class="table table-striped">
                 <tr>
                     <th>Quiz</th>
@@ -28,47 +37,48 @@
         </div>
     {%  else %}
         <div class="form-group">
-            <button class="button" onclick="location.href = '/profile/{{ request.session.id }}'">View my profile</button>
+            <button class="button btn-group-justified" onclick="location.href = '/profile/{{ request.session.id }}'">
+                View my profile
+            </button>
             <form method="post" enctype="multipart/form-data" action="/info_change">
             {% csrf_token %}
-                <table>
-                    {% for i in info_form %}
-                        <tr>
-                            <td>{{ i.label }}</td>
-                            <td>{{ i }}</td>
-                        </tr>
-                    {% endfor %}
-                        <tr>
-                            <td colspan="2">
-                                <img src="media/{{ info_form.image.value }}" width="250" height="250">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <button type="submit" class="button ui-button-text">Save</button>
-                            </td>
-                        </tr>
-                </table>
-
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Personal Information</div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                                {% for i in info_form %}
+                                         <a class="list-group-item disabled">{{ i.label }}</a>
+                                         <a class="list-group-item">{{ i }}</a>
+                                {% endfor %}
+                             <a class="list-group-item disabled">
+                                 <img src="media/{{ info_form.image.value }}" width="250" height="250">
+                             </a>
+                             <a class="list-group-item">
+                                 <button type="submit" class="button btn-group-justified">Save</button>
+                             </a>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <hr>
         <div class="form-group">
             <form method="post" action="/password_change">
             {% csrf_token %}
-                <table>
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Password Change </div>
+                    <div class="panel-body">
+                        <div class="list-group">
                     {% for i in password_form %}
-                        <tr>
-                            <td>{{ i.label }}</td>
-                            <td>{{ i }}</td>
-                        </tr>
+                        <a class="list-group-item disabled">{{ i.label }}</a>
+                        <a class="list-group-item">{{ i }}</a>
                     {% endfor %}
-                        <tr>
-                            <td colspan="2">
-                                <button type="submit" class="button ui-button-text">Change</button>
-                            </td>
-                        </tr>
-                </table>
+                        <a class="list-group-item">
+                            <button type="submit" class="button btn-group-justified">Change</button>
+                        </a>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     {% endif %}

@@ -1,34 +1,41 @@
+.navbar-inverse{
+    border-radius: 0px;
+    font-size: 125%;
+}
+
+.footer {
+  position: relative;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
+
 .jumbotron{
-    margin: 15px;
+    padding-left : 25px;
+    padding-right: 25px;
 }
-.jumbotron *{
-    text-indent: 20px;
-}
-
-.jumbotron a{
-    margin-left: 20px;
+.jumbotron .form-group{
+    margin: 0 auto;
 }
 
-.jumbotron table{
-    width: 100%;
-
-}
-.jumbotron button{
-    text-indent: 0;
+.list-group{
+    width: 30%;
+    margin: 0 auto;
 }
 
-.jumbotron img{
-    width: 250px;
-    height: 250px;
-}
-
-body{
-    padding: 25px;
-}
 form table{
     margin-left: auto;
     margin-right: auto;
+    border-collapse:separate;
+    border-spacing: 10px;
 }
-form table td{
-    text-align: center;
+
+img{
+    height: 256px;
+    width: 256px;
+
+    margin: 0 auto;
 }

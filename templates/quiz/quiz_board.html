@@ -11,7 +11,7 @@
             <th>Date</th>
             <th>Points</th>
             <th>Author</th>
-            <th>&nbsp;</th>
+            <th>Click</th>
         </tr>
         {% for i in quizes %}
             <tr>
@@ -20,7 +20,7 @@
                 <td>{{ i.date }}</td>
                 <td>{{ i.points }}</td>
                 <td><a href="profile/{{ i.author.id }}">{{ i.author.username }}</a></td>
-                <td><button class="button" onclick="location.href='/quiz/{{ i.id }}'"><span class="glyphicon glyphicon-play"></span> Play</button></td>
+                <td><button class="btn-success" onclick="location.href='/quiz/{{ i.id }}'"><span class="glyphicon glyphicon-play"></span> Play</button></td>
             </tr>
         {% endfor %}
     </table>

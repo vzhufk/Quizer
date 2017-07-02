@@ -14,8 +14,17 @@ class SignUpForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=64)
     username = forms.CharField(label='Username')
     password = forms.CharField(label='Password', widget=forms.PasswordInput())
-    password_repeat = forms.CharField(label='Password', widget=forms.PasswordInput())
+    password_repeat = forms.CharField(label='Password repeat', widget=forms.PasswordInput())
 
+    def clean(self):
+        cleaned_data = super(SignUpForm, self).clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("password_repeat")
+
+        if password != confirm_password:
+            raise forms.ValidationError(
+                "Password and Confirm Password does not match."
+            )
 
 class ProfileEditForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=64)

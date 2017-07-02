@@ -175,25 +175,23 @@ def signup(request):
     :return:
     """
     if request.method == "POST":
-        sign_up_form = forms.SignUpForm(request.POST)
-        sign_up_form.is_valid()
-        try:
-            u = User(email=sign_up_form.cleaned_data['email'], username=sign_up_form.cleaned_data['username'])
-            error = u.check_existence()
-
-            if sign_up_form.cleaned_data['password'] != sign_up_form.cleaned_data['password_repeat']:
-                error = "Passwords didn't match."
-        except KeyError:
-            error = "Mistakes!"
-        if error is None:
-            u.set_password(sign_up_form.cleaned_data['password'])
-            u.save()
-            return home(request, message='Successful!')
+        form = forms.SignUpForm(request.POST)
+        if not form.is_valid():
+            error = str(form.errors.as_text())
+            return render(request, 'quiz/signup.html', {'error': error, 'form': form})
         else:
-            return render(request, 'quiz/signup.html', {'error': error, 'form': sign_up_form})
-    else:
-        sign_up_form = forms.SignUpForm()
-        return render(request, 'quiz/signup.html', {'form': sign_up_form})
+            user = models.User()
+            user.username = form.cleaned_data['username']
+            user.email = form.cleaned_data['email']
+            if user.check_existence():
+                error = 'User already exists.'
+                return render(request, 'quiz/signup.html', {'error': error, 'form': form})
+            else:
+                user.set_password(form.cleaned_data['password'])
+                user.save()
+                return home(request, message='Successful!')
+    form = forms.SignUpForm()
+    return render(request, 'quiz/signup.html', {'form': form})
 
 
 def profile(request, user_id=None):
